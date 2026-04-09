@@ -44,24 +44,23 @@ public class PagamentoService {
 
     private void mapperDtoToPagamento(PagamentoDTO pagamentoDTO, Pagamento pagamento){
         pagamento.setValor(pagamentoDTO.getValor());
-        pagamento.setValor(pagamentoDTO.getValor());
         pagamento.setNumeroCartao(pagamentoDTO.getNumeroCartao());
-        pagamento.setValidade(pagamento.getValidade());
+        pagamento.setValidade(pagamentoDTO.getValidade()); // ✔ correto
         pagamento.setCodigoSeguranca(pagamentoDTO.getCodigoSeguranca());
         pagamento.setPedidoId(pagamentoDTO.getPedidoId());
-
     }
 
     @Transactional
     public PagamentoDTO updatePagamento(Long id, PagamentoDTO pagamentoDTO){
-
-        try{
+        try {
             Pagamento pagamento = pagamentoRepository.getReferenceById(id);
             mapperDtoToPagamento(pagamentoDTO, pagamento);
             pagamento.setStatus(pagamentoDTO.getStatus());
             pagamento = pagamentoRepository.save(pagamento);
-        }catch (EntityNotFoundException e){
-            throw new ResourceNotFoundException("Recurso nao encontrado - ID:"+id)
+
+            return new PagamentoDTO(pagamento); // ✔ usar construtor do DTO
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Recurso nao encontrado - ID:" + id);
         }
     }
 
@@ -74,8 +73,6 @@ public class PagamentoService {
         pagamentoRepository.deleteById(id);
 
     }
-
-
 
 
 }///////////////
