@@ -5,6 +5,7 @@ import com.github.BeatrizRosa05.ms.pagamentos.entities.Pagamento;
 import com.github.BeatrizRosa05.ms.pagamentos.exceptions.ResourceNotFoundException;
 import com.github.BeatrizRosa05.ms.pagamentos.repository.PagamentoRepository;
 import com.github.BeatrizRosa05.ms.pagamentos.tests.Factory;
+import jakarta.persistence.EntityNotFoundException;
 import org.hibernate.action.internal.EntityActionVetoException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -137,7 +138,8 @@ public class PagamentoServiceTest {
     void updatePagamentoShouldThrowResourceNotFoundExceptionWhenIdDoesNotExist(){
 
         Mockito.when(pagamentoRepository.getReferenceById(nonExistingId))
-                .thenThrow(EntityActionVetoException.class);
+                .thenThrow(EntityNotFoundException.class); // 👈 aqui
+
         PagamentoDTO inputDto = new PagamentoDTO(pagamento);
 
         Assertions.assertThrows(ResourceNotFoundException.class,
@@ -146,8 +148,6 @@ public class PagamentoServiceTest {
         Mockito.verify(pagamentoRepository).getReferenceById(nonExistingId);
         Mockito.verify(pagamentoRepository, Mockito.never()).save(Mockito.any(Pagamento.class));
         Mockito.verifyNoMoreInteractions(pagamentoRepository);
-
-
     }
 
 
