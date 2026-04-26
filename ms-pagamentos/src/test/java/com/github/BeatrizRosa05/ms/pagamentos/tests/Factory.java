@@ -9,9 +9,15 @@ import java.math.BigDecimal;
 public class Factory {
 
     public static Pagamento createPagamento(){
-        Pagamento pagamento = new Pagamento(1L, BigDecimal.valueOf(32.25),
-                "Brienne de Tarth", "4718293744458291", "07/15",
-                "354", Status.CRIADO, 1L);
+        Pagamento pagamento = new Pagamento();
+        pagamento.setId(1L);
+        pagamento.setValor(BigDecimal.valueOf(32.25));
+        pagamento.setNome("Brienne de Tarth");
+        pagamento.setNumeroCartao("4718293744458291");
+        pagamento.setValidade("07/15");
+        pagamento.setCodigoSeguranca("354");
+        pagamento.setStatus(Status.CRIADO);
+        pagamento.setPedidoId(1L);
         return pagamento;
     }
 

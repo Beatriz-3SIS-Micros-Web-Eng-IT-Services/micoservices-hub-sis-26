@@ -44,6 +44,7 @@ public class PagamentoService {
 
     private void mapperDtoToPagamento(PagamentoDTO pagamentoDTO, Pagamento pagamento){
         pagamento.setValor(pagamentoDTO.getValor());
+        pagamento.setNome(pagamentoDTO.getNome());
         pagamento.setNumeroCartao(pagamentoDTO.getNumeroCartao());
         pagamento.setValidade(pagamentoDTO.getValidade()); // ✔ correto
         pagamento.setCodigoSeguranca(pagamentoDTO.getCodigoSeguranca());
